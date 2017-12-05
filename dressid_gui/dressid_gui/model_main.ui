@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Model_main</class>
+ <widget class="QMainWindow" name="Model_main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>714</width>
+    <height>506</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DressID</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Predict</string>
+       </attribute>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>9</x>
+          <y>9</y>
+          <width>352</width>
+          <height>35</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Gothic L</family>
+          <pointsize>21</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>This is a dressID programm</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>254</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Gothic L</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Just check how it's work! </string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>190</y>
+          <width>298</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Gothic L</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Chose photo with some dress</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnOnePic">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>230</y>
+          <width>191</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Try</string>
+        </property>
+        <property name="shortcut">
+         <string>Shift+F4</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Sort</string>
+       </attribute>
+       <widget class="QPushButton" name="btnSort">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>100</y>
+          <width>121</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sort!</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="edt1">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>100</y>
+          <width>341</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>481</width>
+          <height>35</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Gothic L</family>
+          <pointsize>21</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Here you can sort all your clothes</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>461</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>URW Gothic L</family>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>If you don't see the difference</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst1">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>111</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst2">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>150</y>
+          <width>111</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst3">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>150</y>
+          <width>111</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst4">
+        <property name="geometry">
+         <rect>
+          <x>370</x>
+          <y>150</y>
+          <width>111</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="lst5">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>150</y>
+          <width>111</width>
+          <height>192</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>714</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
