@@ -1,0 +1,5 @@
+0	Outerwear
+1	dress
+2	pants
+3	pullover
+4	shirt
