@@ -171,7 +171,6 @@ void readImage(std::string& filename,std::function<void (const std::string&, con
 {
     std::cout << "Reading image " << filename << std::endl;
     cv::Mat img = cv::imread(filename, 0);
-
     std::string classname = getClassName(filename);
     cv::Mat descriptors = getDescriptors(img);
     callback(classname, descriptors);

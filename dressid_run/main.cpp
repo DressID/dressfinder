@@ -54,7 +54,7 @@ int main(){
     cv::Ptr<cv::ml::ANN_MLP> mlp=cv::ml::ANN_MLP::load(mlp_path);
 
     std::cout << "Give image for check"  <<std::endl;
-    std::string filename = "/home/danil/techno/dressid/DressNeural/rubaha4.jpg";
+    std::string filename = "/home/danil/techno/dressid/DressNeural/testme.jpg";
     //std::cin >> filename;
     cv::Mat output;
 
@@ -149,15 +149,15 @@ int main(){
 
         cv::Ptr<cv::ml::TrainData> trainData = cv::ml::TrainData::create(trainSamples,cv::ml::ROW_SAMPLE, trainResponses);
         std::cout << "Training neural network again" << std::endl;
-        cv::Ptr<cv::ml::ANN_MLP> mlp2 = mlp;
-        mlp2->train(trainData, cv::ml::ANN_MLP::UPDATE_WEIGHTS);
+        //cv::Ptr<cv::ml::ANN_MLP> mlp2 = mlp;
+        mlp->train(trainData, cv::ml::ANN_MLP::UPDATE_WEIGHTS);
 
         vocabulary.push_back(vocabulary2);
 
         trainSamples.release();
         trainResponses.release();
 
-        saveModels(mlp, vocabulary2, classes);
+        saveModels(mlp, vocabulary, classes);
     }
 
 

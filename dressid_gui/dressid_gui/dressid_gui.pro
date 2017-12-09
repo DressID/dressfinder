@@ -37,11 +37,13 @@ SOURCES += \
         main.cpp \
         model_main.cpp \
     ANNtrainer.cpp \
-    style.cpp
+    style.cpp \
+    qdress.cpp
 
 HEADERS += \
         model_main.h \
-    ANNtrainer.hpp
+    ANNtrainer.hpp \
+    qdress.h
 
 FORMS += \
         model_main.ui
