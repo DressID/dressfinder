@@ -43,19 +43,19 @@ std::string convert_id(int id)
 
 int main(){
     std::cout << "Enter MLP model path: " << std::endl;
-    std::string mlp_path;
-    std::cin >> mlp_path;
+    std::string mlp_path = "mlp.yaml";
+    //std::cin >> mlp_path;
     std::cout << "Enter vocabulary path: " << std::endl;
-    std::string vocabulary_path;
-    std::cin >> vocabulary_path;
+    std::string vocabulary_path="vocabulary.yaml";
+    //std::cin >> vocabulary_path;
     std::cout << "Enter classes path: " << std::endl;
-    std::string classes_path;
-    std::cin >> classes_path;
+    std::string classes_path="classes.txt";
+    //std::cin >> classes_path;
     cv::Ptr<cv::ml::ANN_MLP> mlp=cv::ml::ANN_MLP::load(mlp_path);
 
     std::cout << "Give image for check"  <<std::endl;
-    std::string filename;
-    std::cin >> filename;
+    std::string filename = "/home/danil/techno/dressid/DressNeural/testme.jpg";
+    //std::cin >> filename;
     cv::Mat output;
 
     int networkInputSize = 512;
@@ -71,6 +71,7 @@ int main(){
     std::set<std::string> classes;
     readclasses(classes, input);
     input.close();
+
     std::cout << "reading img" << std::endl;
     readImage(filename,
               [&](const std::string& classname, const cv::Mat& descriptors) {
@@ -102,17 +103,19 @@ int main(){
                       descriptorsSet.push_back(descriptors);
                       ImageData* data = new ImageData;
                       data->classname = name;
+                      //std::cout << name <<std::endl;
                       data->bowFeatures = cv::Mat::zeros(cv::Size(networkInputSize, 1), CV_32F);
                       for (int j = 0; j < descriptors.rows; j++)
                       {
                           descriptorsMetadata.push_back(data);
                       }
                   });
-
+        //std::cout << getClassCode(classes, "shirt") << std::endl;
         std::cout << "Creating new vocabulary" << std::endl;
         cv::Mat labels;
         cv::Mat vocabulary2;
-
+        //int const* rrr = descriptorsSet.size;
+        std::cout << descriptorsSet <<std::endl;
         cv::kmeans(descriptorsSet, networkInputSize, labels, cv::TermCriteria(cv::TermCriteria::EPS +
                                                                               cv::TermCriteria::MAX_ITER, 10, 0.01), 1,
                                                                               cv::KMEANS_PP_CENTERS, vocabulary2);
@@ -146,15 +149,15 @@ int main(){
 
         cv::Ptr<cv::ml::TrainData> trainData = cv::ml::TrainData::create(trainSamples,cv::ml::ROW_SAMPLE, trainResponses);
         std::cout << "Training neural network again" << std::endl;
-        cv::Ptr<cv::ml::ANN_MLP> mlp2 = mlp;
-        mlp2->train(trainData, cv::ml::ANN_MLP::UPDATE_WEIGHTS);
+        //cv::Ptr<cv::ml::ANN_MLP> mlp2 = mlp;
+        mlp->train(trainData, cv::ml::ANN_MLP::UPDATE_WEIGHTS);
 
         vocabulary.push_back(vocabulary2);
 
         trainSamples.release();
         trainResponses.release();
 
-        saveModels(mlp, vocabulary2, classes);
+        saveModels(mlp, vocabulary, classes);
     }
 
 

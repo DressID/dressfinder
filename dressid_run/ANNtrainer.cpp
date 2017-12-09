@@ -182,14 +182,27 @@ void readImage(std::string& filename,std::function<void (const std::string&, con
 
 std::set<std::string> readclasses(std::set<std::string>& list, std::ifstream& input){
     //int k = 0;
-    while (!input.eof()){
-        int d;
-        std::string name;
-        input >> d;
-        input >> name;
-        if (name != "") {
-            list.insert(name);
-        }
+//    while (!input.eof()){
+//        int d;
+//        std::string name;
+//        input >> d;
+//        input >> name;
+//        if (name != "") {
+//            list.insert(name);
+//            //std::cout << name << " ";
+//        }
+//    }
+    //std::cout << std::endl;
+    std::string line;
+    while (std::getline(input, line))
+    {
+        std::stringstream ss;
+        ss << line;
+        int index;
+        std::string classname;
+        ss >> index;
+        ss >> classname;
+        list.insert(classname);
     }
     return list;
 }

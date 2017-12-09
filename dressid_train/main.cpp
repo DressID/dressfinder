@@ -49,14 +49,20 @@ int main(int argc, char** argv)
                });
     std::cout << "Working time in minutes: " << ((double)cv::getTickCount() - start) / cv::getTickFrequency() / 60.0 << std::endl;
 
+    std::cout << "saving descriptorsSet" << std::endl;
+    cv::FileStorage fs("descriptorsSet.yaml", cv::FileStorage::WRITE);
+    fs << "descriptorsSet" << descriptorsSet;
+    fs.release();
 
     std::cout << "Creating vocabulary..." << std::endl;
+
     start = (double)cv::getTickCount();
     cv::Mat labels;
     cv::Mat vocabulary;
 
     cv::kmeans(descriptorsSet, networkInputSize, labels, cv::TermCriteria(cv::TermCriteria::EPS +
                                                                           cv::TermCriteria::MAX_ITER, 10, 0.01), 1, cv::KMEANS_PP_CENTERS, vocabulary);
+
     descriptorsSet.release();
     std::cout << "Working time in minutes: " << ((double)cv::getTickCount() - start) / cv::getTickFrequency() / 60.0 << std::endl;
 
