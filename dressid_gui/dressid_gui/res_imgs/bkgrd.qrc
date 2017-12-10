@@ -1,0 +1,7 @@
+<RCC>
+    <qresource lang="russian" prefix="/img"/>
+    <qresource prefix="/img">
+        <file>bkgrd.jpg</file>
+        <file>logo1.png</file>
+    </qresource>
+</RCC>

@@ -16,6 +16,13 @@ Model_main::Model_main(QWidget *parent) :
     ui(new Ui::Model_main)
 {
     ui->setupUi(this);
+    //QPixmap bkgnd("model/bkgrd.jpg");
+    QPixmap bkgnd(":/img/bkgrd.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
     std::string mlp_path = "model/mlp.yaml";
     std::string vocabulary_path = "model/vocabulary.yaml";
     std::string classes_path = "model/classes.txt";
@@ -291,9 +298,10 @@ void Model_main::on_btnOnePic_clicked()
         file.close();
         QLabel *newlbl = new QLabel;
         QPixmap pc(file_name);
-        newlbl->setPixmap(pc.scaledToHeight(100));
+        newlbl->setPixmap(pc.scaled(90,150,Qt::KeepAspectRatioByExpanding));
         newlbl->setFrameShape(QFrame::Panel);
         newlbl->setFrameShadow(QFrame::Raised);
+        newlbl->setFixedSize(90,150);
         ui->gridLayout->addWidget(newlbl);
         switch (predictedClass){
         case 0:
@@ -330,7 +338,6 @@ void Model_main::on_btnOnePic_clicked()
 //    cv::FlannBasedMatcher flann;
 //    flann.add(vocabulary);
 //    flann.train();
-//    cv::Mat output;
 //    cv::Mat testSamples;
 //    int networkInputSize = 1024;
 //    readImages(files.begin(), files.end(),
@@ -373,9 +380,25 @@ void Model_main::on_btnOnePic_clicked()
 //        default:
 //            break;
 //        }
+//        QFile file("model/save.txt");
+//        file.open(QFile::ReadOnly);
+//        QString str = QString(file.readAll());
+//        file.close();
+//        if (str.indexOf(QString::fromStdString(*it)) == -1){
+//            if (file.open(QFile::Append)){
+//                QByteArray data;
+//                data.append(QString::fromStdString(*it));
+//                data.append(" ");
+//                data.append(QString::number(predictedClass));
+//                data.append("\n");
+//                file.write(data);
+//            }
+//            file.flush();
+//            file.close();
+//        }
 //    }
-
-
+//    testSamples.release();
+//    testOutput.release();
 //}
 
 cv::Mat resizeImg(const cv::Mat& img, double scale ){
