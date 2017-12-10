@@ -47,3 +47,6 @@ HEADERS += \
 
 FORMS += \
         model_main.ui
+
+RESOURCES += \
+    res_imgs/bkgrd.qrc

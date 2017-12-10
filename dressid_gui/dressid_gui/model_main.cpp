@@ -16,6 +16,13 @@ Model_main::Model_main(QWidget *parent) :
     ui(new Ui::Model_main)
 {
     ui->setupUi(this);
+    //QPixmap bkgnd("model/bkgrd.jpg");
+    QPixmap bkgnd(":/img/bkgrd.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
     std::string mlp_path = "model/mlp.yaml";
     std::string vocabulary_path = "model/vocabulary.yaml";
     std::string classes_path = "model/classes.txt";
@@ -131,7 +138,7 @@ QString convert_id(int id)
 void Model_main::on_btnOnePic_clicked()
 {
     QString file_name = QFileDialog::getOpenFileName(this, tr("Choose file"), QDir::homePath(), tr("Image Files (*.png *.jpg *.bmp)"),nullptr, QFileDialog::DontUseNativeDialog);
-    QFileDialog::getOpenFileName();
+    //QFileDialog::getOpenFileName();
     //qDebug() << "file name: " <<file_name;
     cv::FlannBasedMatcher flann;
     flann.add(vocabulary);
@@ -162,7 +169,7 @@ void Model_main::on_btnOnePic_clicked()
     if (reply == QMessageBox::No) {
         bool ok;
         QStringList dressTypes;
-        dressTypes << tr("Outerwear") << tr("dress") << tr("pants") << tr("pullover") << tr("tshirt");
+        dressTypes << tr("Outerwear") << tr("dress") << tr("pants") << tr("blouse") << tr("tshirt");
         QString qname = QInputDialog::getItem(this,"Choose right", "this is:", dressTypes, 0, false, &ok);
         int i = dressTypes.indexOf(qname);
        // QString qname = QInputDialog::getText(this, tr("Enter right classnem"), tr("What is it?"), QLineEdit::Normal, "", &ok);
@@ -275,38 +282,46 @@ void Model_main::on_btnOnePic_clicked()
     }
 
     QFile file("model/save.txt");
-    if (file.open(QFile::Append)){
-        QByteArray data;
-        data.append(file_name);
-        data.append(" ");
-        data.append(QString::number(predictedClass));
-        data.append("\n");
-        file.write(data);
+    file.open(QFile::ReadOnly);
+    QString str = QString(file.readAll());
+    file.close();
+    if (str.indexOf(file_name) == -1){
+        if (file.open(QFile::Append)){
+            QByteArray data;
+            data.append(file_name);
+            data.append(" ");
+            data.append(QString::number(predictedClass));
+            data.append("\n");
+            file.write(data);
+        }
+        file.flush();
+        file.close();
+        QLabel *newlbl = new QLabel;
+        QPixmap pc(file_name);
+        newlbl->setPixmap(pc.scaled(90,150,Qt::KeepAspectRatioByExpanding));
+        newlbl->setFrameShape(QFrame::Panel);
+        newlbl->setFrameShadow(QFrame::Raised);
+        newlbl->setFixedSize(90,150);
+        ui->gridLayout->addWidget(newlbl);
+        switch (predictedClass){
+        case 0:
+            outerwear.push_back(qDress(file_name,predictedClass));
+            break;
+        case 1:
+            dress.push_back(qDress(file_name,predictedClass));
+            break;
+        case 2:
+            pants.push_back(qDress(file_name,predictedClass));
+            break;
+        case 3:
+            pullover.push_back(qDress(file_name,predictedClass));
+            break;
+        case 4:
+            tshirt.push_back(qDress(file_name,predictedClass));
+            break;
+        }
     }
     file.close();
-    QLabel *newlbl = new QLabel;
-    QPixmap pc(file_name);
-    newlbl->setPixmap(pc.scaledToHeight(100));
-    newlbl->setFrameShape(QFrame::Panel);
-    newlbl->setFrameShadow(QFrame::Raised);
-    ui->gridLayout->addWidget(newlbl);
-    switch (predictedClass){
-    case 0:
-        outerwear.push_back(qDress(file_name,predictedClass));
-        break;
-    case 1:
-        dress.push_back(qDress(file_name,predictedClass));
-        break;
-    case 2:
-        pants.push_back(qDress(file_name,predictedClass));
-        break;
-    case 3:
-        pullover.push_back(qDress(file_name,predictedClass));
-        break;
-    case 4:
-        tshirt.push_back(qDress(file_name,predictedClass));
-        break;
-    }
     //this->repaint();
 }
 
@@ -323,7 +338,6 @@ void Model_main::on_btnOnePic_clicked()
 //    cv::FlannBasedMatcher flann;
 //    flann.add(vocabulary);
 //    flann.train();
-//    cv::Mat output;
 //    cv::Mat testSamples;
 //    int networkInputSize = 1024;
 //    readImages(files.begin(), files.end(),
@@ -366,9 +380,25 @@ void Model_main::on_btnOnePic_clicked()
 //        default:
 //            break;
 //        }
+//        QFile file("model/save.txt");
+//        file.open(QFile::ReadOnly);
+//        QString str = QString(file.readAll());
+//        file.close();
+//        if (str.indexOf(QString::fromStdString(*it)) == -1){
+//            if (file.open(QFile::Append)){
+//                QByteArray data;
+//                data.append(QString::fromStdString(*it));
+//                data.append(" ");
+//                data.append(QString::number(predictedClass));
+//                data.append("\n");
+//                file.write(data);
+//            }
+//            file.flush();
+//            file.close();
+//        }
 //    }
-
-
+//    testSamples.release();
+//    testOutput.release();
 //}
 
 cv::Mat resizeImg(const cv::Mat& img, double scale ){
@@ -441,6 +471,7 @@ void Model_main::on_pushButton_clicked()
         break;
     case 1:
         if ( (dress.size() != 0) && (pants.size() !=0 ) && (pullover.size() != 0) ){
+            srand(time(NULL));
             switch(rand()%2){
             case 0:
                 cv::namedWindow("dress");
@@ -484,6 +515,7 @@ void Model_main::on_pushButton_clicked()
         break;
     case 2:
         if ( (dress.size() != 0) && (pants.size() !=0 ) && (tshirt.size() != 0) ){
+            srand(time(NULL));
             switch(rand()%2){
             case 0:
                 cv::namedWindow("dress");
