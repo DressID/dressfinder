@@ -130,7 +130,8 @@ QString convert_id(int id)
 }
 void Model_main::on_btnOnePic_clicked()
 {
-    QString file_name = QFileDialog::getOpenFileName(this, "Choose file", QDir::homePath());
+    QString file_name = QFileDialog::getOpenFileName(this, tr("Choose file"), QDir::homePath(), tr("Image Files (*.png *.jpg *.bmp)"),nullptr, QFileDialog::DontUseNativeDialog);
+    QFileDialog::getOpenFileName();
     //qDebug() << "file name: " <<file_name;
     cv::FlannBasedMatcher flann;
     flann.add(vocabulary);
@@ -153,6 +154,8 @@ void Model_main::on_btnOnePic_clicked()
     mlp->predict(testSamples, output);
     int predictedClass;
     predictedClass = getPredictedClass(output);
+    output.release();
+    flann.clear();
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this,"predicted class","I think this is "+ convert_id(predictedClass)+". Am I right?", QMessageBox::Yes|QMessageBox::No);
 
@@ -304,7 +307,7 @@ void Model_main::on_btnOnePic_clicked()
         tshirt.push_back(qDress(file_name,predictedClass));
         break;
     }
-    this->repaint();
+    //this->repaint();
 }
 
 
@@ -461,15 +464,18 @@ void Model_main::on_pushButton_clicked()
         } else if ((pants.size() ==0 ) || (pullover.size() == 0)){
             cv::namedWindow("dress");
             cv::moveWindow(dr, 100, 0);
+            srand(time(NULL));
             num = rand()%(dress.size());
             cv::imshow("dress", resizeImg(dress[num].img,350));
         } else if ((dress.size() == 0)){
             cv::namedWindow("blouse");
             cv::moveWindow(bl, 100, 0);
+            srand(time(NULL));
             num = rand()%(pullover.size());
             cv::imshow("blouse", resizeImg(resizeImg(pullover[num].img, 350), 350));
             cv::namedWindow("pants");
             cv::moveWindow(pt, 460, 0);
+            srand(time(NULL));
             num = rand()%(pants.size());
             cv::imshow("pants", resizeImg(pants[num].img, 350));
         }
@@ -483,16 +489,19 @@ void Model_main::on_pushButton_clicked()
                 cv::namedWindow("dress");
                 cv::moveWindow(dr, 100, 0);
                 //cv::moveWindow("dress", 100, 0);
+                srand(time(NULL));
                 num = rand()%(dress.size());
                 cv::imshow("dress", resizeImg(dress[num].img,350));
                 break;
             case 1:
                 cv::namedWindow("tshirt");
                 cv::moveWindow(ts, 100, 0);
+                srand(time(NULL));
                 num = rand()%(tshirt.size());
                 cv::imshow("tshirt", resizeImg(tshirt[num].img, 350));
                 cv::namedWindow("pants");
                 cv::moveWindow(pt, 460, 0);
+                srand(time(NULL));
                 num = rand()%(pants.size());
                 cv::imshow("pants", resizeImg(pants[num].img, 350));
             }
@@ -500,15 +509,18 @@ void Model_main::on_pushButton_clicked()
             cv::namedWindow("dress");
             cv::moveWindow(dr, 100, 0);
             //cv::moveWindow("dress", 100, 0);
+            srand(time(NULL));
             num = rand()%(dress.size());
             cv::imshow("dress", resizeImg(dress[num].img,350));
         } else if ((dress.size() == 0)){
             cv::namedWindow("tshirt");
             cv::moveWindow(ts, 100, 0);
+            srand(time(NULL));
             num = rand()%(tshirt.size());
             cv::imshow("tshirt", resizeImg(tshirt[num].img, 350));
             cv::namedWindow("pants");
             cv::moveWindow(pt, 460, 0);
+            srand(time(NULL));
             num = rand()%(pants.size());
             cv::imshow("pants", resizeImg(pants[num].img, 350));
         }
